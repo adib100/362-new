@@ -4,7 +4,7 @@
 #include "hardware/gpio.h"
 #include "hardware/adc.h"
 
-const uint btns[] = {5, 11, 22};
+const uint btns[] = {5, 11, 5};
 const uint leds[] = {6, 12, 10};
 #define NUM_MOLES 3
 
