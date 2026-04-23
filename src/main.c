@@ -4,6 +4,15 @@
 #include "hardware/gpio.h"
 #include "hardware/adc.h"
 
+extern int SPI_DISP_SCK = 34; // 4 to 34 sck
+extern int SPI_DISP_CSn = 35; // 5 to 35 tx
+extern int SPI_DISP_TX = 37; // 6 to 37 csn
+// spi0
+extern int ADC_CH5 = 45; 
+extern score = 0;
+extern time_left = 30;
+extern highscore = 0;
+
 const uint btns[] = {5, 11, 5};
 const uint leds[] = {6, 12, 10};
 #define NUM_MOLES 3
@@ -52,6 +61,9 @@ int main() {
     
     printf("Whac-A-Mole! Starting in 3 seconds...\n");
     sleep_ms(3000);
+
+    init_adc();
+    read_adc();
 
     int score = 0;
     uint32_t start_time = to_ms_since_boot(get_absolute_time());
