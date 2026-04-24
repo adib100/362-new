@@ -14,18 +14,6 @@ void gpio_callback();
 #include "pico/stdlib.h"
 #include "hardware/pwm.h"
 
-typedef enum {
-    IDLE,
-    PLAYING,
-    GAME_OVER
-} GameState;
-
-typedef enum {
-    SLOW,
-    MEDIUM,
-    FAST
-} GameSpeed;
-
 static int duty_cycle = 0;
 static int dir = 0;
 static int color = 0;
