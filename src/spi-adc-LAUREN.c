@@ -224,8 +224,8 @@ void init_disp_spi()
     ;
     spi_set_format(spi0, 9, 0, 0, SPI_MSB_FIRST);
 
-    init_display_timer();
-    cd_init();
+    // init_display_timer();
+    // cd_init();
 }
 
 void display_welcome()

@@ -104,11 +104,15 @@ int main() {
     init_adc();
     read_adc();
 
+    printf("starting spi\n ");
     // init_chardisp_pins();
     init_disp_spi();
     cd_init();
-    cd_display1("ECE 362 is the  ");
     cd_display2("course for you! ");
+    sleep_ms(5000);
+    cd_display1("ECE 362 is the  ");
+    printf("done with spi. sleep 3ms now\n");
+    sleep_ms(3000);
 
     // display_welcome();
     // sleep_ms(3000);
