@@ -1,3 +1,79 @@
+
+
+
+#include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
+#include "pico/stdlib.h"
+#include "hardware/pwm.h"
+
+#define N 1024
+#define RATE 20000 //20khz sample rate
+
+void pwm_breathing();
+
+int16_t wavetable[N];
+uint32_t offset0 = 0;
+step0 = 0;
+uint32_t offset1 = 0;
+step1 = 0;
+
+static int duty_cycle = 0;
+static int dir = 0;
+static int color = 0;
+
+void display_init_pins();
+void display_init_timer();
+void display_char_print(const char message[]);
+void keypad_init_pins();
+void keypad_init_timer();
+void init_wavetable(void);
+void set_freq(int chan, float f);
+
+void drum_machine();
+void init_pwm_audio() {
+    // 1. Set Pin 26 to PWM function
+    gpio_set_function(26, GPIO_FUNC_PWM);
+    uint slice_num = pwm_gpio_to_slice_num(26); 
+
+    // 2. Set Clock Divider for 1MHz (150MHz / 150)
+    pwm_set_clkdiv(slice_num, 150.f); 
+
+    // 3. Set Wrap for 20kHz Sample Rate (1MHz / 20kHz = 50, so wrap is 49)
+    pwm_set_wrap(slice_num, 49); 
+
+    // 4. Initialize and set IRQ
+    init_wavetable();
+    pwm_set_irq0_enabled(slice_num, true);
+    irq_set_exclusive_handler(PWM_IRQ_WRAP_0, pwm_audio_handler);
+    irq_set_enabled(PWM_IRQ_WRAP_0, true);
+    
+    // 5. Enable the slice
+    pwm_set_enabled(slice_num, true);
+}
+void pwm_audio_handler() {
+    uint slice_num = pwm_gpio_to_slice_num(26);
+    pwm_clear_irq(slice_num); // Must clear the interrupt
+
+    // Advance the wavetable phase
+    offset0 += step0;
+    
+    // Keep offset within wavetable bounds (N = 1024)
+    if (offset0 >= (N << 16)) offset0 -= (N << 16);
+
+    // Get signed sample (-32768 to 32767)
+    int32_t samp = wavetable[offset0 >> 16];
+
+    // Scale to PWM Wrap (49)
+    // First: make it unsigned (0 to 65535)
+    uint32_t unipolar = (uint32_t)(samp + 32768);
+    // Second: scale to 49
+    uint32_t level = (unipolar * 49) / 65536;
+
+    // Output to Channel A (GPIO 26)
+    pwm_set_chan_level(slice_num, PWM_CHAN_A, level);
+}
+
 /* //good luck on teh
 #include <stdio.h>
 #include <math.h>
@@ -29,6 +105,7 @@ void init_wavetable(void);
 void set_freq(int chan, float f);
 
 void drum_machine();
+// 
 void init_pwm_static () //implementing static duty cycle pwm signal
 {
 
