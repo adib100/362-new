@@ -25,6 +25,41 @@ const uint leds[] = {6, 12, 10};
 volatile int last_button_pressed = -1;
 volatile bool hit_registered = false;
 uint32_t last_interrupt_time = 0;
+#define BUZZER_PIN 26
+ 
+static void play_tone(uint32_t freq_hz, uint32_t duration_ms) {
+    uint slice = pwm_gpio_to_slice_num(BUZZER_PIN);
+    if (freq_hz == 0) {
+        pwm_set_enabled(slice, false);
+        sleep_ms(duration_ms);
+        pwm_set_enabled(slice, true);
+        return;
+    }
+    uint32_t sys_clk = clock_get_hz(clk_sys);
+    uint32_t div = 1;
+    uint32_t wrap = sys_clk / freq_hz - 1;
+    while (wrap > 65535 && div < 256) { div++; wrap = sys_clk / (div * freq_hz) - 1; }
+    pwm_config cfg = pwm_get_default_config();
+    pwm_config_set_clkdiv_int(&cfg, div);
+    pwm_config_set_wrap(&cfg, (uint16_t)wrap);
+    pwm_init(slice, &cfg, true);
+    pwm_set_gpio_level(BUZZER_PIN, (uint16_t)(wrap / 2));
+    sleep_ms(duration_ms);
+    pwm_set_gpio_level(BUZZER_PIN, 0);
+}
+ 
+static void play_correct_sound(void) {
+    play_tone(784,  80);
+    play_tone(1047, 120);
+    play_tone(0,    30);
+    play_tone(1319, 160);
+}
+ 
+static void play_wrong_sound(void) {
+    play_tone(330, 150);
+    play_tone(0,    40);
+    play_tone(220, 200);
+}
 
 void gpio_callback(uint gpio, uint32_t events) {
     uint32_t current_time = to_ms_since_boot(get_absolute_time());
@@ -56,6 +91,8 @@ void setup_hardware() {
     // adc_gpio_init(26);
     // adc_select_input(0);
     // srand(adc_read());
+    gpio_set_function(BUZZER_PIN, GPIO_FUNC_PWM);
+    pwm_set_gpio_level(BUZZER_PIN, 0);
 }
 
 int main() {
