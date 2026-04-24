@@ -75,7 +75,7 @@ int main() {
     read_adc();
 
     display_welcome();
-    sleep_ms(10000);
+    sleep_ms(3000);
 
     while (gpio_get(START_BTN) == 1) {
         tight_loop_contents();
