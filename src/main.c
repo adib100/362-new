@@ -38,6 +38,10 @@ void gpio_callback(uint gpio, uint32_t events) {
 void setup_hardware() {
     stdio_init_all();
 
+    gpio_init(21);
+    gpio_set_dir(21, GPIO_IN);
+    gpio_pull_up(21);
+
     for(int i = 0; i < NUM_MOLES; i++) {
         gpio_init(leds[i]);
         gpio_set_dir(leds[i], GPIO_OUT);
@@ -64,6 +68,10 @@ int main() {
 
     init_adc();
     read_adc();
+
+    while (gpio_get(START_BTN) == 1) {
+        tight_loop_contents();
+    }
 
     int score = 0;
     uint32_t start_time = to_ms_since_boot(get_absolute_time());
