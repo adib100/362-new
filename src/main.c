@@ -4,7 +4,7 @@
 #include "hardware/gpio.h"
 #include "hardware/adc.h"
 #include "functions.h"
-
+#include "hardware/clock.h"
 extern int SPI_DISP_SCK;
 extern int SPI_DISP_CSn;
 extern int SPI_DISP_TX;
@@ -25,7 +25,7 @@ const uint leds[] = {6, 12, 10};
 volatile int last_button_pressed = -1;
 volatile bool hit_registered = false;
 uint32_t last_interrupt_time = 0;
-#define BUZZER_PIN 26
+#define BUZZER_PIN 15
  
 static void play_tone(uint32_t freq_hz, uint32_t duration_ms) {
     uint slice = pwm_gpio_to_slice_num(BUZZER_PIN);
@@ -104,15 +104,11 @@ int main() {
     init_adc();
     read_adc();
 
-    printf("starting spi\n ");
     // init_chardisp_pins();
     init_disp_spi();
     cd_init();
-    cd_display2("course for you! ");
-    sleep_ms(5000);
     cd_display1("ECE 362 is the  ");
-    printf("done with spi. sleep 3ms now\n");
-    sleep_ms(3000);
+    cd_display2("course for you! ");
 
     // display_welcome();
     // sleep_ms(3000);
