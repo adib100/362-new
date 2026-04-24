@@ -3,6 +3,7 @@
 #include "pico/stdlib.h"
 #include "hardware/gpio.h"
 #include "hardware/adc.h"
+#include "functions.h"
 
 extern int SPI_DISP_SCK;
 extern int SPI_DISP_CSn;
@@ -12,6 +13,8 @@ extern int ADC_CH5;
 extern score;
 extern time_left;
 extern highscore;
+extern GameSpeed game_speed;
+extern GameState game_status;
 
 const int START_BTN = 21;
 
