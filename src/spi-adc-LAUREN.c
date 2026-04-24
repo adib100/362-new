@@ -108,7 +108,7 @@ void read_adc() {
     {
         game_speed = SLOW;
     }
-    else if(potent >= 1365 & potent < 2730)
+    else if(potent >= 1365 && potent < 2730)
     {
         game_speed = MEDIUM;
     }
