@@ -4,14 +4,14 @@
 #include "hardware/gpio.h"
 #include "hardware/adc.h"
 
-extern int SPI_DISP_SCK = 34; // 4 to 34 sck
-extern int SPI_DISP_CSn = 35; // 5 to 35 tx
-extern int SPI_DISP_TX = 37; // 6 to 37 csn
+extern int SPI_DISP_SCK;
+extern int SPI_DISP_CSn;
+extern int SPI_DISP_TX;
 // spi0
-extern int ADC_CH5 = 45; 
-extern score = 0;
-extern time_left = 30;
-extern highscore = 0;
+extern int ADC_CH5;
+extern score;
+extern time_left;
+extern highscore;
 
 const uint btns[] = {5, 11, 5};
 const uint leds[] = {6, 12, 10};

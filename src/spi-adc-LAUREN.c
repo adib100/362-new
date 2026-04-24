@@ -129,7 +129,7 @@ void read_adc() {
         game_speed = FAST;
     } 
 
-    printf("Game speed = %s, %i", game_speed, potent);
+    printf("Game speed = %i", potent);
 
     // Above equivalent:
     // // Wait for the ADC FIFO to have data
