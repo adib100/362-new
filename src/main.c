@@ -53,12 +53,14 @@ static void play_correct_sound(void) {
     play_tone(1047, 120);
     play_tone(0,    30);
     play_tone(1319, 160);
+    printf("play wrong sound\n");
 }
  
 static void play_wrong_sound(void) {
     play_tone(330, 150);
     play_tone(0,    40);
     play_tone(220, 200);
+    printf("play wrong sound\n");
 }
 
 void gpio_callback(uint gpio, uint32_t events) {
