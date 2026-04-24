@@ -35,6 +35,7 @@ void display_init_timer();
 void display_char_print(const char message[]);
 void keypad_init_pins();
 void keypad_init_timer();
+void pwm_audio_handler() 
 void init_wavetable(void);
 void set_freq(int chan, float f);
 //extern KeyEvents kev;
