@@ -136,8 +136,10 @@ int main() {
                 if (last_button_pressed == target_btn) {
                     score++;
                     printf("WHACKED! Score: %d\n", score);
+                    play_correct_sound();
                 } else {
                     printf("MISSED!\n");
+                    play_wrong_sound();
                 }
                 hit_registered = false;
                 break; 
