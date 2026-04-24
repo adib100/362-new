@@ -69,9 +69,15 @@ int main() {
     init_adc();
     read_adc();
 
+<<<<<<< HEAD
     while (gpio_get(START_BTN) == 1) {
         tight_loop_contents();
     }
+=======
+    
+    display_welcome();
+    sleep_ms(10000);
+>>>>>>> 5e1e3f000be1c16a79ecc8486237f2654b7bda41
 
     int score = 0;
     uint32_t start_time = to_ms_since_boot(get_absolute_time());
