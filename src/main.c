@@ -3,6 +3,7 @@
 #include "pico/stdlib.h"
 #include "hardware/gpio.h"
 #include "hardware/adc.h"
+#include "functions.h"
 
 extern int SPI_DISP_SCK;
 extern int SPI_DISP_CSn;
@@ -12,7 +13,7 @@ extern int ADC_CH5;
 extern score;
 extern time_left;
 extern highscore;
-const int START = 
+
 const uint btns[] = {5, 11, 5};
 const uint leds[] = {6, 12, 10};
 #define NUM_MOLES 3
@@ -54,10 +55,10 @@ void setup_hardware() {
         gpio_set_irq_enabled_with_callback(btns[i], GPIO_IRQ_EDGE_FALL, true, &gpio_callback);
     }
 
-    adc_init();
-    adc_gpio_init(26);
-    adc_select_input(0);
-    srand(adc_read());
+    // adc_init();
+    // adc_gpio_init(26);
+    // adc_select_input(0);
+    // srand(adc_read());
 }
 
 int main() {
@@ -69,7 +70,7 @@ int main() {
     init_adc();
     read_adc();
 
-    while (gpio_get(START) == 1) {
+    while (gpio_get(START_BTN) == 1) {
         tight_loop_contents();
     }
 

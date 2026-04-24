@@ -17,18 +17,6 @@ int score = 0;
 int time_left = 30;
 int highscore = 0;
 
-typedef enum {
-    IDLE,
-    PLAYING,
-    GAME_OVER
-} GameState;
-
-typedef enum {
-    SLOW,
-    MEDIUM,
-    FAST
-} GameSpeed;
-
 GameSpeed game_speed = SLOW;
 GameState game_status = IDLE;
 
