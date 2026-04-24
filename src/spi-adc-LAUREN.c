@@ -17,18 +17,6 @@ int score = 0;
 int time_left = 30;
 int highscore = 0;
 
-typedef enum {
-    IDLE,
-    PLAYING,
-    GAME_OVER
-} GameState;
-
-typedef enum {
-    SLOW,
-    MEDIUM,
-    FAST
-} GameSpeed;
-
 GameSpeed game_speed = SLOW;
 GameState game_status = IDLE;
 
@@ -129,7 +117,7 @@ void read_adc() {
         game_speed = FAST;
     } 
 
-    printf("Game speed = %s, %i", game_speed, potent);
+    printf("Game speed = %i", potent);
 
     // Above equivalent:
     // // Wait for the ADC FIFO to have data
@@ -228,15 +216,16 @@ void cd_init() {
 
 void init_disp_spi()
 {
+    spi_init(spi0, 10000);
     for(int pin = SPI_DISP_CSn; pin <= SPI_DISP_TX; pin++)
     {
         gpio_set_function(pin, GPIO_FUNC_SPI); // GPIO_FUNC_SPI = 1
     }
-    spi_init(spi0, 10000);
+    ;
     spi_set_format(spi0, 9, 0, 0, SPI_MSB_FIRST);
 
-    init_display_timer();
-    cd_init();
+    // init_display_timer();
+    // cd_init();
 }
 
 void display_welcome()
