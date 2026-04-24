@@ -13,6 +13,8 @@ extern score;
 extern time_left;
 extern highscore;
 
+const int START_BTN = 21;
+
 const uint btns[] = {5, 11, 5};
 const uint leds[] = {6, 12, 10};
 #define NUM_MOLES 3
@@ -54,10 +56,10 @@ void setup_hardware() {
         gpio_set_irq_enabled_with_callback(btns[i], GPIO_IRQ_EDGE_FALL, true, &gpio_callback);
     }
 
-    adc_init();
-    adc_gpio_init(26);
-    adc_select_input(0);
-    srand(adc_read());
+    // adc_init();
+    // adc_gpio_init(26);
+    // adc_select_input(0);
+    // srand(adc_read());
 }
 
 int main() {
@@ -69,15 +71,13 @@ int main() {
     init_adc();
     read_adc();
 
-<<<<<<< HEAD
+    display_welcome();
+    sleep_ms(10000);
+
     while (gpio_get(START_BTN) == 1) {
         tight_loop_contents();
     }
-=======
-    
-    display_welcome();
-    sleep_ms(10000);
->>>>>>> 5e1e3f000be1c16a79ecc8486237f2654b7bda41
+
 
     int score = 0;
     uint32_t start_time = to_ms_since_boot(get_absolute_time());
