@@ -65,6 +65,10 @@ int main() {
     init_adc();
     read_adc();
 
+    
+    display_welcome();
+    sleep_ms(10000);
+
     int score = 0;
     uint32_t start_time = to_ms_since_boot(get_absolute_time());
 
