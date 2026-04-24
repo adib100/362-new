@@ -74,8 +74,14 @@ int main() {
     init_adc();
     read_adc();
 
-    display_welcome();
-    sleep_ms(3000);
+    // init_chardisp_pins();
+    init_disp_spi();
+    cd_init();
+    cd_display1("ECE 362 is the  ");
+    cd_display2("course for you! ");
+
+    // display_welcome();
+    // sleep_ms(3000);
 
     while (gpio_get(START_BTN) == 1) {
         tight_loop_contents();
