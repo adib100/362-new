@@ -82,9 +82,9 @@ int main() {
         uint32_t mole_start = to_ms_since_boot(get_absolute_time());
         uint32_t mole_window;
         switch (game_speed) {
-        case SLOW:   mole_window = 1500; break;
+        case SLOW:   mole_window = 5000; break;
         case MEDIUM: mole_window = 1000; break;
-        case FAST:   mole_window =  500; break;
+        case FAST:   mole_window =  100; break;
         }
         while (to_ms_since_boot(get_absolute_time()) - mole_start < mole_window) {
             if (hit_registered) {
