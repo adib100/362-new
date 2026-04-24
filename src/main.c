@@ -14,9 +14,6 @@ extern score;
 extern time_left;
 extern highscore;
 extern GameSpeed game_speed;
-extern GameState game_status;
-
-const int START_BTN = 21;
 
 const uint btns[] = {5, 11, 5};
 const uint leds[] = {6, 12, 10};
@@ -42,10 +39,6 @@ void gpio_callback(uint gpio, uint32_t events) {
 
 void setup_hardware() {
     stdio_init_all();
-
-    gpio_init(21);
-    gpio_set_dir(21, GPIO_IN);
-    gpio_pull_up(21);
 
     for(int i = 0; i < NUM_MOLES; i++) {
         gpio_init(leds[i]);
@@ -83,11 +76,6 @@ int main() {
     // display_welcome();
     // sleep_ms(3000);
 
-    while (gpio_get(START_BTN) == 1) {
-        tight_loop_contents();
-    }
-
-
     int score = 0;
     uint32_t start_time = to_ms_since_boot(get_absolute_time());
 
@@ -100,8 +88,13 @@ int main() {
         hit_registered = false; 
 
         uint32_t mole_start = to_ms_since_boot(get_absolute_time());
-
-        while (to_ms_since_boot(get_absolute_time()) - mole_start < 1000) {
+        uint32_t mole_window;
+        switch (game_speed) {
+        case SLOW:   mole_window = 5000; break;
+        case MEDIUM: mole_window = 1000; break;
+        case FAST:   mole_window =  100; break;
+        }
+        while (to_ms_since_boot(get_absolute_time()) - mole_start < mole_window) {
             if (hit_registered) {
                 if (last_button_pressed == target_btn) {
                     score++;
