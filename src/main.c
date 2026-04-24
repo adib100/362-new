@@ -13,6 +13,7 @@ extern int ADC_CH5;
 extern score;
 extern time_left;
 extern highscore;
+extern GameSpeed game_speed;
 
 const uint btns[] = {5, 11, 5};
 const uint leds[] = {6, 12, 10};
