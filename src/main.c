@@ -28,18 +28,7 @@ uint32_t last_interrupt_time = 0;
 #define BUZZER_PIN 15
  
 
-if (button_pushed_correctly) {
-    // Play Good Sound
-    set_freq(0, 1000.0f); // 1kHz beep
-    sleep_ms(100);        // Play for 100ms
-    mute();               // Stop sound
-} 
-else if (button_pushed_wrong) {
-    // Play Bad Sound
-    set_freq(0, 150.0f);  // 150Hz low buzz
-    sleep_ms(300);        // Play for 300ms
-    mute();               // Stop sound
-}
+
 // static void play_tone(uint32_t freq_hz, uint32_t duration_ms) {
 //     uint slice = pwm_gpio_to_slice_num(BUZZER_PIN);
 //     if (freq_hz == 0) {
@@ -150,10 +139,16 @@ int main() {
             if (hit_registered) {
                 if (last_button_pressed == target_btn) {
                     score++;
+                    set_freq(0, 1000.0f); // 1kHz beep
+    sleep_ms(100);        // Play for 100ms
+    mute();
                     printf("WHACKED! Score: %d\n", score);
                     play_correct_sound();
                 } else {
                     printf("MISSED!\n");
+                    set_freq(0, 150.0f);  // 150Hz low buzz
+    sleep_ms(300);        // Play for 300ms
+    mute();
                     play_wrong_sound();
                 }
                 hit_registered = false;
