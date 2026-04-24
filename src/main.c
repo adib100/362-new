@@ -72,6 +72,7 @@ int main() {
     init_disp_spi();
     cd_init();
     cd_display1("ECE 362 is the  ");
+    sleep_ms(5000);
     cd_display2("course for you! ");
     printf("done with spi. sleep 3ms now\n");
     sleep_ms(3000);
